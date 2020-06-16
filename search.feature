@@ -1,56 +1,96 @@
 
-Scenario: A user searches for resources
-	Given a User is on the front page of the DLR-application
-	When they enters a query in the query-field
-	And they click search
-	Then they see a resultlist of resoures 
 
+	# each Given-When-Then block should have a Scenario tag describing what the topic is about
+	# if possible, the Given statements should refer back to a previous Scenario.
 
-Given a User enters a query in the query-field
-When they enter a query that contains descriptive metadata 
-And they click search
-Then they get results based on that metadata
+	Scenario: A user enters a Query in the Query Field
+		Given a User is on the front page of the DLR application
+		And the user is not logged in
+		When they type a Query in the Query Field
+		Then they see the Query in the Query Field
 
-Given a User enters a query in the query-field
-When they enter a query that contains text from a resource document of the type PDF, TXT, PPT or PDF
-And they click search
-Then they get results from those documents
+	Scenario: A user searches for Resources
+		Given A user enters a Query in the Query Field
+		When they click Search
+		Then they see a Result List of Resoures
+		And they see options to sort by <Filter>
+		And they see options to view by <View Mode>
+		Examples:
+			| Filter                        | View Mode |
+			| Title (Descending)            | Grid View |
+			| Title (Ascending)             | List View |
+			| Publication date (Descending) |
+			| Publication date (Ascending)  |
 
-Given a User enters a query in the query-field
-When they enter a query that contains the name of a registrator
-And they click search
-Then they get results from the the given Registrator
+	# A concept or something that is not concretely defined, should be named in Uppercase (query-field -> Query Field, search -> Search, result list -> Result List, resources -> Resources)
 
-Given a User enters a query in the query-field
-When they enter a query that contains the name of a Institution
-And they click search
-Then they get results from the the given Institution
+	Scenario: A user searches with descriptive metadata
+		Given A user enters a Query in the Query Field
+		And the Query contains descriptive metadata
+		When they click Search
+		Then they see a Result List based on that metadata
 
-Given a User can see a resultlist 
-And they are presented with the choice to sort by:
-      | Title (Descending)            |
-      | Title (Ascending)     	      |
-      | Publication date (Descending) |
-      | Publication date (Ascending)  |      
-WHen they select one of the sorting mechanisms
-Then the resultlist is reordered
+	# If there are more alternatives available for a scenario, Examples should be used to show which alternatives exist
+	Scenario: A user searches for resources with a file type
+		Given A user enters a Query in the Query Field
+		And the Query contains text from a Resource of <Type>
+		When they click Search
+		Then they see a Result List with that <Type>
+		Examples:
+			| Type |
+			| PDF  |
+			| TXT  |
+			| PPT  |
+			| PDF  |
 
-Given a User can see a resultlist 
-And they are presented with the choice to show the result by: 
-	| Grid View |
-	| List View |
-When they select one of the presentation modes
-Then the resultlist is redrawed
+	Scenario: A user searches for Resources from a Registrator
+		Given A user enters a Query in the Query Field
+		And the Query contains the name of a Registrator
+		When they click Search
+		Then they see a Result List from the the given Registrator
 
-Given a User can see a resultlist
-When the resultList is shown as Grid View
-Then each result item contains Thumbnail and Title.
+	Scenario: A user searches for Resources from an Institution
+		Given A user enters a Query in the Query Field
+		And the Query contains the name of an Institution
+		When they click Search
+		Then they see a Result List from the given Institution
 
-Given a User can see a resultlist
-When the resultList is shown as List View
-Then each result item contains Thumbnail, Title, Main Author, Creation date, Description and Tags
+	Scenario: A user sorts the Result List
+		Given A user searches for Resources
+		When they select a <Filter>
+		Then the Result List is filtered based on that <Filter>
+		Examples:
+			| Filter                        |
+			| Title (Descending)            |
+			| Title (Ascending)             |
+			| Publication date (Descending) |
+			| Publication date (Ascending)  |
 
-Scenario: Anonomys users can search
-	Given a User is not logged in
-	When they searches for resources
-	Then they can see a list of resources 
+	Scenario: A user views the Result List
+		Given A user searches for Resources
+		When they select a <View Mode>
+		Then the Result List is shown in that <View Mode>
+		Examples:
+			| View Mode |
+			| Grid View |
+			| List View |
+
+	Scenario: A user views the Result List in Grid View
+		Given A user views the Result List
+		When the View Mode is Grid View
+		Then each Result item in the Result List contains fields 
+		 | Thumbnail | 
+		 | Title |
+
+	Scenario: A user views the Result List in List View
+		Given A user views the Result List
+		When the View Mode is List View
+		Then each Result item in the Result List contains fields
+		| Thumbnail |
+		| Title |
+		| Main Author |
+		| Creation date | 
+		| Description | 
+		|Tags |
+
+	# If an anonymous user can do the same as all the scenarios above, the last scenario can be deleted, and an "And the user is not logged in" can be included in the "A user enters a Query in the Query Field" scenario
