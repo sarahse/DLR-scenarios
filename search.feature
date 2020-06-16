@@ -4,7 +4,7 @@ Scenario: A user searches for resources
 	When they enters a query in the query-field
 	And they click search
 	Then they see a resultlist of resoures 
-	And each result item contains a thumbnail and a title.
+
 
 Given a User enters a query in the query-field
 When they enter a query that contains descriptive metadata 
@@ -26,16 +26,31 @@ When they enter a query that contains the name of a Institution
 And they click search
 Then they get results from the the given Institution
 
-Given a User is not logged in
-When they search for resoures
-Then they can see a list of resources 
-
-Given a user has searched for resources 
-And can see a resultlist 
-When they are presented with the choice to sort by:
+Given a User can see a resultlist 
+And they are presented with the choice to sort by:
       | Title (Descending)            |
       | Title (Ascending)     	      |
       | Publication date (Descending) |
       | Publication date (Ascending)  |      
-And they select one of the sorting mechanisms
+WHen they select one of the sorting mechanisms
 Then the resultlist is reordered
+
+Given a User can see a resultlist 
+And they are presented with the choice to show the result by: 
+	| Grid View |
+	| List View |
+When they select one of the presentation modes
+Then the resultlist is redrawed
+
+Given a User can see a resultlist
+When the resultList is shown as Grid View
+Then each result item contains Thumbnail and Title.
+
+Given a User can see a resultlist
+When the resultList is shown as List View
+Then each result item contains Thumbnail, Title, Main Author, Creation date, Description and Tags
+
+Scenario: Anonomys users can search
+	Given a User is not logged in
+	When they searches for resources
+	Then they can see a list of resources 
