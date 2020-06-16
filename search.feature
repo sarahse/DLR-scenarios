@@ -29,7 +29,7 @@
 		Given A user enters a Query in the Query Field
 		And the Query contains text from a Resource of <Type>
 		When they click Search
-		Then they see a Result List with that <Type>
+		Then they see a Result List with Resources with that <Type>
 		Examples:
 			| Type |
 			| PDF  |
@@ -41,13 +41,13 @@
 		Given A user enters a Query in the Query Field
 		And the Query contains the name of a Registrator
 		When they click Search
-		Then they see a Result List from the the given Registrator
+		Then they see a Result List with Resources from the given Registrator
 
 	Scenario: A user searches for Resources from an Institution
 		Given A user enters a Query in the Query Field
 		And the Query contains the name of an Institution
 		When they click Search
-		Then they see a Result List from the given Institution
+		Then they see a Result List with Resources from the given Institution
 
 	Scenario: A user sorts the Result List
 		Given A user searches for Resources
