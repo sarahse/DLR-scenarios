@@ -13,14 +13,8 @@
 		Given A user enters a Query in the Query Field
 		When they click Search
 		Then they see a Result List of Resoures
-		And they see options to sort by <Filter>
-		And they see options to view by <View Mode>
-		Examples:
-			| Filter                        | View Mode |
-			| Title (Descending)            | Grid View |
-			| Title (Ascending)             | List View |
-			| Publication date (Descending) |
-			| Publication date (Ascending)  |
+		And they see options to sort by Filter
+		And they see options to view by View Mode
 
 	# A concept or something that is not concretely defined, should be named in Uppercase (query-field -> Query Field, search -> Search, result list -> Result List, resources -> Resources)
 
@@ -78,19 +72,19 @@
 	Scenario: A user views the Result List in Grid View
 		Given A user views the Result List
 		When the View Mode is Grid View
-		Then each Result item in the Result List contains fields 
-		 | Thumbnail | 
-		 | Title |
+		Then each Result item in the Result List contains fields
+			| Thumbnail |
+			| Title     |
 
 	Scenario: A user views the Result List in List View
 		Given A user views the Result List
 		When the View Mode is List View
 		Then each Result item in the Result List contains fields
-		| Thumbnail |
-		| Title |
-		| Main Author |
-		| Creation date | 
-		| Description | 
-		|Tags |
+			| Thumbnail     |
+			| Title         |
+			| Main Author   |
+			| Creation date |
+			| Description   |
+			| Tags          |
 
-	# If an anonymous user can do the same as all the scenarios above, the last scenario can be deleted, and an "And the user is not logged in" can be included in the "A user enters a Query in the Query Field" scenario
+# If an anonymous user can do the same as all the scenarios above, the last scenario can be deleted, and an "And the user is not logged in" can be included in the "A user enters a Query in the Query Field" scenario
